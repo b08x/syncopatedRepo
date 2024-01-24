@@ -1,0 +1,61 @@
+# Maintainer: Llewelyn Trahaearn <WoefulDerelict at GMail dot com>
+_name=jacktrip
+pkgname=jacktrip-git
+pkgver=2.0.2.r0.gb98ed775
+pkgrel=1
+pkgdesc="Tool to manage and tune JACK settings for optimum performance between networked machines."
+arch=('i686' 'x86_64' 'x86_64_v3')
+url="https://github.com/jacktrip/jacktrip.git"
+license=('MIT' 'custom')
+depends=('gcc-libs' 'glibc' 'hicolor-icon-theme' 'qt6-base' 'qt6-declarative' 'qt6-networkauth' 'qt6-quickcontrols2' 'qt6-svg' 'qt6-webchannel' 'qt6-webengine' 'qt6-websockets')
+makedepends=('jack' 'doxygen' 'git' 'meson' 'ninja' 'help2man' 'python-jinja' 'python-yaml' 'rtaudio')
+provides=("${pkgname%-*}")
+conflicts=("${pkgname%-*}")
+source=("${pkgname%-*}::git+https://github.com/jacktrip/jacktrip.git")
+sha512sums=('SKIP')
+_branch=master
+
+pkgver() {
+  ( set -o pipefail
+    git describe --long --tags 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  )
+}
+
+
+prepare() {
+  cd "${_name}"
+ git submodule update --init --recursive
+}
+
+build() {
+  local meson_options=(
+    -D noupdater=true
+  )
+  cd "${_name}"
+  
+  arch-meson "${meson_options[@]}" builddir $pkgname-$pkgver
+  
+  meson setup -Dqtversion=6 builddir .
+  meson compile -C builddir
+  doxygen Doxyfile
+}
+
+build() {
+
+
+  
+  meson compile -C builddir
+}
+
+
+package() {
+  depends+=(
+    jack libjack.so
+    rtaudio librtaudio.so
+  )
+
+  DESTDIR="$pkgdir" meson install -C builddir
+  install -vDm 644 $pkgname-$pkgver/{LICENSE.md,LICENSES/MIT.txt} -t "$pkgdir/usr/share/licenses/$pkgname"
+  install -vDm 644 $pkgname-$pkgver/README.md -t "$pkgdir/usr/share/doc/$pkgname"
+}

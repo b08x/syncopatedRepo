@@ -1,0 +1,250 @@
+From fa5849377b0eeddbedd1d99768cfc9ad9933d751 Mon Sep 17 00:00:00 2001
+From: David Runge <dave@sleepmap.de>
+Date: Sat, 11 Apr 2020 18:42:54 +0200
+Subject: [PATCH] Setting JucePlugin_LV2URI to a real URI.
+
+ambix_*/JuceLibraryCode/AppConfig.h:
+Switching from using 'JucePlugin_Name' as JucePlugin_LV2URI to a 'real'
+URI, so that lv2 hosts can actually discover and use the plugins and not
+crash on them.
+
+Note: The URI does not have to be a 'real' URI (as in: an existing
+website), but needs to follow the established URI scheme to be
+recognized.
+
+Closes #27
+
+Adding definitions for ambix_encoder lv2 plugins.
+
+ambix_encoder/ambix_encoder_i{2,4,6,8}/CMakeLists.txt:
+Adding definitions for JucePlugin_LV2URI, so that the specific instances
+of ambix_encoder will have a unique LV2 URI and can be picked up by lv2
+plugin hosts.
+
+Fixing ambix_decoder LV2 plugin URI
+
+ambix_decoder/ambix_decoder/CMakeLists.txt:
+Adding definition for JucePlugin_LV2URI, so that it doesn't use the
+ambix_binaural LV2 URI.
+---
+ ambix_binaural/JuceLibraryCode/AppConfig.h             | 2 +-
+ ambix_converter/JuceLibraryCode/AppConfig.h            | 2 +-
+ ambix_decoder/ambix_decoder/CMakeLists.txt             | 1 +
+ ambix_directional_loudness/JuceLibraryCode/AppConfig.h | 2 +-
+ ambix_encoder/JuceLibraryCode/AppConfig.h              | 2 +-
+ ambix_encoder/ambix_encoder_i2/CMakeLists.txt          | 1 +
+ ambix_encoder/ambix_encoder_i4/CMakeLists.txt          | 1 +
+ ambix_encoder/ambix_encoder_i6/CMakeLists.txt          | 1 +
+ ambix_encoder/ambix_encoder_i8/CMakeLists.txt          | 1 +
+ ambix_maxre/JuceLibraryCode/AppConfig.h                | 2 +-
+ ambix_mirror/JuceLibraryCode/AppConfig.h               | 2 +-
+ ambix_rotator/JuceLibraryCode/AppConfig.h              | 2 +-
+ ambix_rotator_z/JuceLibraryCode/AppConfig.h            | 2 +-
+ ambix_vmic/JuceLibraryCode/AppConfig.h                 | 2 +-
+ ambix_warp/JuceLibraryCode/AppConfig.h                 | 2 +-
+ ambix_widening/JuceLibraryCode/AppConfig.h             | 2 +-
+ 16 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/ambix_binaural/JuceLibraryCode/AppConfig.h b/ambix_binaural/JuceLibraryCode/AppConfig.h
+index 5b65a6e..49f4c63 100644
+--- a/ambix_binaural/JuceLibraryCode/AppConfig.h
++++ b/ambix_binaural/JuceLibraryCode/AppConfig.h
+@@ -344,7 +344,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-	#define JucePlugin_LV2URI               JucePlugin_Name
++	#define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_binaural_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+ 	#define JucePlugin_WantsLV2State        1
+diff --git a/ambix_converter/JuceLibraryCode/AppConfig.h b/ambix_converter/JuceLibraryCode/AppConfig.h
+index fba03fd..b8ee42b 100644
+--- a/ambix_converter/JuceLibraryCode/AppConfig.h
++++ b/ambix_converter/JuceLibraryCode/AppConfig.h
+@@ -320,7 +320,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_converter_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_decoder/ambix_decoder/CMakeLists.txt b/ambix_decoder/ambix_decoder/CMakeLists.txt
+index 7e942b2..b7f4209 100644
+--- a/ambix_decoder/ambix_decoder/CMakeLists.txt
++++ b/ambix_decoder/ambix_decoder/CMakeLists.txt
+@@ -4,6 +4,7 @@ SET ( WITH_FFTW3 FALSE )
+ 
+ # binaural
+ ADD_DEFINITIONS (-DBINAURAL_DECODER=0)
++ADD_DEFINITIONS(-DJucePlugin_LV2URI="https://github.com/kronihias/ambix/ambix_decoder_o3")
+ SET ( SPECIFIC_PROJECTNAME ambix_decoder )
+ 
+ SET ( SPECIFIC_SOURE_DIR ${SRC_DIR}/ambix_binaural )
+diff --git a/ambix_directional_loudness/JuceLibraryCode/AppConfig.h b/ambix_directional_loudness/JuceLibraryCode/AppConfig.h
+index ed2a1a2..8264d74 100644
+--- a/ambix_directional_loudness/JuceLibraryCode/AppConfig.h
++++ b/ambix_directional_loudness/JuceLibraryCode/AppConfig.h
+@@ -271,7 +271,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-	#define JucePlugin_LV2URI               JucePlugin_Name
++	#define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_directional_loudness_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+ #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_encoder/JuceLibraryCode/AppConfig.h b/ambix_encoder/JuceLibraryCode/AppConfig.h
+index 4d2860b..7efad2a 100644
+--- a/ambix_encoder/JuceLibraryCode/AppConfig.h
++++ b/ambix_encoder/JuceLibraryCode/AppConfig.h
+@@ -333,7 +333,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_encoder_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_encoder/ambix_encoder_i2/CMakeLists.txt b/ambix_encoder/ambix_encoder_i2/CMakeLists.txt
+index 00464e9..0819100 100644
+--- a/ambix_encoder/ambix_encoder_i2/CMakeLists.txt
++++ b/ambix_encoder/ambix_encoder_i2/CMakeLists.txt
+@@ -3,6 +3,7 @@ SET( WITH_SphericalHarmonic TRUE )
+ SET ( WITH_MyMeterDsp TRUE )
+ 
+ ADD_DEFINITIONS(-DINPUT_CHANNELS=2)
++ADD_DEFINITIONS(-DJucePlugin_LV2URI="https://github.com/kronihias/ambix/ambix_encoder_i2_o3")
+ 
+ # SET ( SPECIFIC_PROJECTNAME ambix_encoder )
+ SET ( SPECIFIC_SOURE_DIR ${SRC_DIR}/ambix_encoder )
+diff --git a/ambix_encoder/ambix_encoder_i4/CMakeLists.txt b/ambix_encoder/ambix_encoder_i4/CMakeLists.txt
+index 44f7baf..536035b 100644
+--- a/ambix_encoder/ambix_encoder_i4/CMakeLists.txt
++++ b/ambix_encoder/ambix_encoder_i4/CMakeLists.txt
+@@ -3,6 +3,7 @@ SET( WITH_SphericalHarmonic TRUE )
+ SET ( WITH_MyMeterDsp TRUE )
+ 
+ ADD_DEFINITIONS(-DINPUT_CHANNELS=4)
++ADD_DEFINITIONS(-DJucePlugin_LV2URI="https://github.com/kronihias/ambix/ambix_encoder_i4_o3")
+ 
+ # SET ( SPECIFIC_PROJECTNAME ambix_encoder )
+ SET ( SPECIFIC_SOURE_DIR ${SRC_DIR}/ambix_encoder )
+diff --git a/ambix_encoder/ambix_encoder_i6/CMakeLists.txt b/ambix_encoder/ambix_encoder_i6/CMakeLists.txt
+index df13bc1..b505eff 100644
+--- a/ambix_encoder/ambix_encoder_i6/CMakeLists.txt
++++ b/ambix_encoder/ambix_encoder_i6/CMakeLists.txt
+@@ -3,6 +3,7 @@ SET( WITH_SphericalHarmonic TRUE )
+ SET ( WITH_MyMeterDsp TRUE )
+ 
+ ADD_DEFINITIONS(-DINPUT_CHANNELS=6)
++ADD_DEFINITIONS(-DJucePlugin_LV2URI="https://github.com/kronihias/ambix/ambix_encoder_i6_o3")
+ 
+ # SET ( SPECIFIC_PROJECTNAME ambix_encoder )
+ SET ( SPECIFIC_SOURE_DIR ${SRC_DIR}/ambix_encoder )
+diff --git a/ambix_encoder/ambix_encoder_i8/CMakeLists.txt b/ambix_encoder/ambix_encoder_i8/CMakeLists.txt
+index 79c393e..353d367 100644
+--- a/ambix_encoder/ambix_encoder_i8/CMakeLists.txt
++++ b/ambix_encoder/ambix_encoder_i8/CMakeLists.txt
+@@ -3,6 +3,7 @@ SET( WITH_SphericalHarmonic TRUE )
+ SET ( WITH_MyMeterDsp TRUE )
+ 
+ ADD_DEFINITIONS(-DINPUT_CHANNELS=8)
++ADD_DEFINITIONS(-DJucePlugin_LV2URI="https://github.com/kronihias/ambix/ambix_encoder_i8_o3")
+ 
+ # SET ( SPECIFIC_PROJECTNAME ambix_encoder )
+ SET ( SPECIFIC_SOURE_DIR ${SRC_DIR}/ambix_encoder )
+diff --git a/ambix_maxre/JuceLibraryCode/AppConfig.h b/ambix_maxre/JuceLibraryCode/AppConfig.h
+index 9eb3246..5834f76 100644
+--- a/ambix_maxre/JuceLibraryCode/AppConfig.h
++++ b/ambix_maxre/JuceLibraryCode/AppConfig.h
+@@ -354,7 +354,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-#define JucePlugin_LV2URI               JucePlugin_Name
++#define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_maxre_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+ #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_mirror/JuceLibraryCode/AppConfig.h b/ambix_mirror/JuceLibraryCode/AppConfig.h
+index 3e4fa84..412ea3e 100644
+--- a/ambix_mirror/JuceLibraryCode/AppConfig.h
++++ b/ambix_mirror/JuceLibraryCode/AppConfig.h
+@@ -343,7 +343,7 @@
+ 
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_mirror_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_rotator/JuceLibraryCode/AppConfig.h b/ambix_rotator/JuceLibraryCode/AppConfig.h
+index ba71d2d..848d00e 100644
+--- a/ambix_rotator/JuceLibraryCode/AppConfig.h
++++ b/ambix_rotator/JuceLibraryCode/AppConfig.h
+@@ -266,7 +266,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_rotator_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_rotator_z/JuceLibraryCode/AppConfig.h b/ambix_rotator_z/JuceLibraryCode/AppConfig.h
+index 76c0182..569c090 100644
+--- a/ambix_rotator_z/JuceLibraryCode/AppConfig.h
++++ b/ambix_rotator_z/JuceLibraryCode/AppConfig.h
+@@ -341,7 +341,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_rotator_z_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_vmic/JuceLibraryCode/AppConfig.h b/ambix_vmic/JuceLibraryCode/AppConfig.h
+index 6c21d03..7d17b8a 100644
+--- a/ambix_vmic/JuceLibraryCode/AppConfig.h
++++ b/ambix_vmic/JuceLibraryCode/AppConfig.h
+@@ -269,7 +269,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_vmic_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_warp/JuceLibraryCode/AppConfig.h b/ambix_warp/JuceLibraryCode/AppConfig.h
+index 18272fb..c3b1a81 100644
+--- a/ambix_warp/JuceLibraryCode/AppConfig.h
++++ b/ambix_warp/JuceLibraryCode/AppConfig.h
+@@ -291,7 +291,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_warp_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1
+diff --git a/ambix_widening/JuceLibraryCode/AppConfig.h b/ambix_widening/JuceLibraryCode/AppConfig.h
+index f1c6e63..881e1d9 100644
+--- a/ambix_widening/JuceLibraryCode/AppConfig.h
++++ b/ambix_widening/JuceLibraryCode/AppConfig.h
+@@ -357,7 +357,7 @@
+ #endif
+ 
+ #ifndef JucePlugin_LV2URI
+-  #define JucePlugin_LV2URI               JucePlugin_Name
++  #define JucePlugin_LV2URI               "https://github.com/kronihias/ambix/ambix_widening_o3"
+ #endif
+ #ifndef JucePlugin_WantsLV2State
+   #define JucePlugin_WantsLV2State        1

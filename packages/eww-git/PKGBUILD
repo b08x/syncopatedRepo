@@ -1,0 +1,62 @@
+# Maintainer: éclairevoyant
+# Contributor: Atif Chowdhury <iftakhar dot awal at gmail dot com>
+
+pkgbase=eww
+pkgname=(eww-{wayland,x11}-git)
+pkgver=0.4.0.r47.ga9a35c1
+pkgrel=1
+pkgdesc="ElKowar's wacky widgets"
+arch=(x86_64)
+url="https://github.com/elkowar/$pkgbase"
+license=(MIT)
+depends=(gtk3 gtk-layer-shell)
+makedepends=(cargo-nightly git)
+provides=("$pkgbase")
+conflicts=("$pkgbase")
+install=$pkgbase.install
+source=("git+$url.git?signed")
+b2sums=('SKIP')
+validpgpkeys=(
+	'94E8F34BCE4F4BA8ED9B29BD50E76B4711E4C3E4' # Leon Kowarschick <5300871+elkowar@users.noreply.github.com>
+	'5DE3E0509C47EA3CF04A42D34AEE18F83AFDEB23' # GitHub (web-flow commit signing) <noreply@github.com>
+)
+
+prepare() {
+	cd $pkgbase
+	cargo fetch --target "$CARCH-unknown-linux-gnu"
+}
+
+pkgver() {
+	git -C $pkgbase describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+	cd $pkgbase
+
+	export CARGO_TARGET_DIR=target_wayland
+	cargo build --frozen --release --no-default-features --features=wayland
+
+	export CARGO_TARGET_DIR=target_x11
+	cargo build --frozen --release --no-default-features --features=x11
+}
+
+_pkg() {
+	cd $pkgbase
+	install -vDm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname/"
+	install -vd "$pkgdir/etc/xdg/$pkgbase/"
+	cp -vr examples/eww-bar "$pkgdir/etc/xdg/$pkgbase/"
+}
+
+package_eww-wayland-git() {
+	pkgdesc+=" (Wayland backend)"
+	depends=(gtk3 gtk-layer-shell)
+	_pkg
+	install -vDm755 target_wayland/release/$pkgbase -t "$pkgdir/usr/bin/"
+}
+
+package_eww-x11-git() {
+	pkgdesc+=" (X11 backend)"
+	depends=(gtk3)
+	_pkg
+	install -vDm755 target_x11/release/$pkgbase -t "$pkgdir/usr/bin/"
+}

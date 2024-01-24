@@ -1,0 +1,33 @@
+# Maintainer: Carlos Aznarán <caznaranl@uni.pe>
+# Contributor: Antonio Rojas <arojas@archlinux.org>
+# Contributor: Alad Wenter <alad@mailbox.org>
+# Contributor: Adam Reichold <adam.reichold@t-online.de>
+pkgname=qpdfview
+pkgver=0.5.0
+pkgrel=3
+pkgdesc="A tabbed PDF viewer using the poppler library"
+url="https://launchpad.net/${pkgname}"
+arch=(x86_64)
+license=(GPL2)
+depends=(libcups libsynctex poppler-qt5 qt5-svg)
+makedepends=(qt5-tools libspectre djvulibre)
+optdepends=('libspectre: for PostScript support'
+  'djvulibre: for DjVu support')
+source=(${url}/trunk/${pkgver}/+download/${pkgname}-${pkgver::-2}.tar.gz)
+
+prepare() {
+  sed -i 's/CONFIG += c++11/CONFIG += c++17/' ${pkgname}-${pkgver::-2}/qpdfview.pri
+}
+
+build() {
+  cd ${pkgname}-${pkgver::-2}
+  lrelease-qt5 qpdfview.pro
+  qmake-qt5 qpdfview.pro
+  make
+}
+
+package() {
+  cd ${pkgname}-${pkgver::-2}
+  make INSTALL_ROOT="$pkgdir" install
+}
+sha256sums=('44efc440a461cbdd757a9b396f1461ee7a2f4364e81df55bd0221f910219be99')
