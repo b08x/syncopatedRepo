@@ -66,6 +66,9 @@ unmount_chroot
 #                             Greetings                                 #
 #########################################################################
 
+declare -rx GPG="DF7A6571781ACB52FA9CF8C1EB4DFE46828DFEDD"
+declare -rx MIRRORS=("bender.syncopated.net" "ec2-user@syncopated.hopto.org")
+
 gum style \
   --foreground 014 --border-foreground 024 --border double \
   --align center --width 50 --margin "1 2" --padding "2 4" \
@@ -107,9 +110,21 @@ if [[ ${3} == 'debug' ]]; then
   say "Debug...\n" $RED
 fi
 
+phrase=$(gum input --password)
+
 for arch in ${architectures[@]}; do
 
+  if [[ $arch == 'x86_64' ]]; then
+    declare -x repo_db="syncopated.db.tar.zst"
+  elif [[ $arch == 'x86_64_v3' ]]; then
+    declare -x repo_db="syncopated-v3.db.tar.zst"
+  fi
+
   mkdir -pv $SRCDEST
+
+  export PKGDEST=$WORKSPACE/builds/packages/$arch
+  export SRCPKGDEST=$WORKSPACE/builds/packages/srcpackages/$arch
+  export LOGDEST=$WORKSPACE/builds/packages/makepkglogs/$arch
 
   for pkgname in ${package_selection[@]}; do
 
@@ -119,9 +134,23 @@ for arch in ${architectures[@]}; do
 
     extra-${arch}-build -c -r $CHROOT -- -c -n -C -u
 
+    cd $WORKSPACE/builds/packages/$arch
 
+    for pkg in *.zst; do
+      echo "${phrase}" | gpg2 -v --batch --yes --detach-sign --pinentry-mode loopback --passphrase --passphrase-fd 0 --out $pkg.sig --sign $pkg
+      repoctl add -P $arch -m -r ./$pkg
+    done
+
+    cd $WORKSPACE/builds/repository/$arch
+
+    repo-add -n -k $GPG $repo_db *.pkg.tar.zst -s
   done
 
+done
+
+for mirror in ${MIRRORS[@]}; do
+  echo -e "syncing local repository to remote ${mirror}\n"
+  rsync -avP --delete  "${WORKSPACE}/builds/repository/${arch}/" "${mirror}:/usr/share/nginx/html/syncopated/repo/${arch}/" || continue
 done
 
 #gum confirm "deploy package(s) to repository?" && . deploy.sh

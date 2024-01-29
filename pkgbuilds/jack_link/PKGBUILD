@@ -2,7 +2,7 @@
 
 _name=jack_link
 pkgname=jack_link-git
-pkgver=v0.1.8.r0.g2065e45
+pkgver=v0.1.9.r0.g938d73d
 pkgrel=1
 pkgdesc="JACK transport timebase bridge to Ableton Link"
 arch=('x86_64' 'x86_64_v3')
