@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-declare -rx GPG="36A6ECD355DB42B296C0CEE2157CA2FC56ECC96A"
+declare -rx GPG="DF7A6571781ACB52FA9CF8C1EB4DFE46828DFEDD"
 
 declare -rx MIRRORS=("bender.syncopated.net" "ec2-user@syncopated.hopto.org")
 #declare -rx MIRRORS=("bender.syncopated.net")

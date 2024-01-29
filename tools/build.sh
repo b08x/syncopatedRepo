@@ -24,13 +24,10 @@ say () {
 #########################################################################
 #                             set locations                             #
 #########################################################################
-
-declare -rx SRCDEST="${HOME}/Packages/sources"
-declare -rx REPOSITORY_LOCAL="${HOME}/Repository"
-
-declare -rx WORKSPACE="${HOME}/Workspace"
-declare -rx PKGBUILDS="${WORKSPACE}/syncopated/pkgrr/pkgbuilds"
-
+declare -rx WORKSPACE="${HOME}/Workspace/syncopatedRepo"
+declare -rx PKGBUILDS="${WORKSPACE}/pkgbuilds"
+declare -rx SRCDEST="${WORKSPACE}/builds/packages/sources"
+declare -rx REPOSITORY_LOCAL="${WORKSPACE}/builds/repository"
 #########################################################################
 #                             set functions                             #
 #########################################################################
@@ -47,50 +44,24 @@ mount_chroot() {
 }
 
 set_configs () {
-  if [ -L "${HOME}/.makepkg.conf" ]; then
-    ln -sf $makepkg_conf $HOME/.makepkg.conf
-  else
-    rm -f $HOME/.makepkg.conf || exit
-    ln -s $makepkg_conf $HOME/.makepkg.conf
-  fi
-
-}
-
-create_chroot() {
-  set_configs
-  mkarchroot -C $pacman_conf -M $makepkg_conf $CHROOT/root base-devel
-}
-
-update_chroot() {
-    arch-nspawn -C $pacman_conf -M $makepkg_conf $CHROOT/root pacman -Scc --noconfirm
-    arch-nspawn -C $pacman_conf -M $makepkg_conf $CHROOT/root pacman -Sy
-}
-
-build () {
-
-  cd "${PKGBUILDS}/${pkgname}"
-
-  makechrootpkg -n -c -r $CHROOT
-
-  # if [ $? = 0 ]; then
-  #   ssh -T ninjabot notify-send "build\ complete\ for\ ${pkgname}-${arch}"
-  # fi
+  sudo chown -R b08x:b08x /usr/share/devtools
+  rsync -avP --delete $WORKSPACE/makepkg.conf.d/ /usr/share/devtools/makepkg.conf.d/
+  rsync -avP $WORKSPACE/pacman.conf.d/ /usr/share/devtools/pacman.conf.d/
 }
 
 cleanup() {
-
-  if [[ ! $DEBUG ]]; then
-    rm -f "$HOME/.makepkg.conf"
-    unmount_chroot
-    rm -rf $SRCDEST && mkdir -p $SRCDEST
-    rm -f "${HOME}/.makepkg.conf"
-  fi
-
+  echo "all set!"
+  # if [[ ! $DEBUG ]]; then
+  #   unmount_chroot
+  #   # rm -rf $SRCDEST && mkdir -p $SRCDEST
+  # fi
 }
 
-cd $WORKSPACE/syncopated/pkgrr && git fetch && git pull
+cd $WORKSPACE && git fetch && git pull
 
+set_configs
 unmount_chroot
+
 #########################################################################
 #                             Greetings                                 #
 #########################################################################
@@ -140,31 +111,16 @@ for arch in ${architectures[@]}; do
 
   mkdir -pv $SRCDEST
 
-  for name in ${package_selection[@]}; do
-
-    pacman_conf="${WORKSPACE}/syncopated/pkgrr/devtools/pacman-${arch}.conf"
-    makepkg_conf="${WORKSPACE}/syncopated/pkgrr/devtools/makepkg-${arch}.conf"
-
-    say $pacman_conf $BLUE
-    say $makepkg_conf $BLUE
-    say "--------------------------\n" $GREEN
+  for pkgname in ${package_selection[@]}; do
 
     mount_chroot
-    create_chroot
-    update_chroot
 
-    declare -x pkgname=$name
+    cd "${PKGBUILDS}/${pkgname}"
 
-    # ssh -T ninjabot notify-send "starting\ build\ for\ ${pkgname}-${arch}"
+    extra-${arch}-build -c -r $CHROOT -- -c -n -C -u
 
-    build $pkgname || if [[ ! $DEBUG ]]; then continue; else break; fi
 
   done
-
-  # if [ ! $? = 0 ]; then
-  #   ssh -T ninjabot notify-send -u critical -t 290000 "build\ failed\ for\ ${pkgname}-${arch}"
-  #   exit
-  # fi
 
 done
 

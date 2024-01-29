@@ -6,8 +6,8 @@
 
 _name=sonic-pi
 pkgname=sonic-pi-git
-pkgver=v4.4.0.r74.gf487277ee
-pkgrel=2
+pkgver=v4.5.0.r1.g10de0b5a2
+pkgrel=1
 pkgdesc="The Live Coding Music Synth for Everyone"
 arch=('i686' 'x86_64' 'x86_64_v3')
 url="http://sonic-pi.net/"
@@ -21,7 +21,7 @@ depends=('aubio' 'boost' 'cmake' 'elixir' 'erlang-nox' 'gcc-libs' 'gendesk'
 'ruby-ffi' 'ruby-i18n' 'ruby-kramdown' 'ruby-minitest' 'ruby-mocha' 'ruby-multi_json'
 'ruby-rake' 'ruby-rouge' 'ruby-rugged' 'ruby-sys-proctable' 'ruby-rexml' 'stk' 'libxext' 'libxft' 'libx11' 'opus-tools' 'opus'
 'sc3-plugins' 'sox' 'supercollider')
-makedepends=('boost' 'curl' 'ninja' 'cmake' 'git' 'erlang-nox' 'gendesk' 'lua' 'qt5-tools' 'wkhtmltopdf-static' 'zip' 'unzip' 'tar' 'gcc12')
+makedepends=('boost' 'curl' 'ninja' 'cmake' 'git' 'erlang-nox' 'gendesk' 'lua' 'qt6-tools' 'wkhtmltopdf-static' 'zip' 'unzip' 'tar' 'gcc12')
 source=('git+https://github.com/samaaron/sonic-pi.git'
         "${_name}-4.4.0-gcc12.patch"
         "${_name}.sh")
@@ -39,7 +39,7 @@ pkgver() {
 
 prepare() {
   cd "${_name}"
-  git fetch && git checkout stable
+  git fetch && git checkout dev
   gendesk -n \
           --pkgname "${pkgname}" \
           --pkgdesc "${pkgdesc}" \
