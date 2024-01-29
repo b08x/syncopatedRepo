@@ -1,6 +1,6 @@
 pkgbase = hydrogen-git
 	pkgdesc = An advanced drum machine (git version)
-	pkgver = 1.1.1.r1355.gc92f20469
+	pkgver = 1.2.1
 	pkgrel = 1
 	url = https://github.com/hydrogen-music/hydrogen
 	arch = x86_64
@@ -24,6 +24,7 @@ pkgbase = hydrogen-git
 	makedepends = portmidi
 	makedepends = python
 	makedepends = qt5-tools
+	makedepends = qt5-svg
 	makedepends = docbook-xml
 	makedepends = docbook-sgml
 	makedepends = docbook-utils
@@ -37,7 +38,7 @@ pkgbase = hydrogen-git
 	depends = qt5-xmlpatterns
 	optdepends = new-session-manager: for session management
 	provides = hydrogen
-	provides = hydrogen=1.1.1
+	provides = hydrogen=1.2.1
 	conflicts = hydrogen
 	source = hydrogen::git+https://github.com/hydrogen-music/hydrogen.git
 	source = hydrogen-docs::git+https://github.com/hydrogen-music/documentation.git

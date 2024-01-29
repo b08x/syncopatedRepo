@@ -19,6 +19,7 @@ pkgbase = iempluginsuite-git
 	makedepends = juce
 	makedepends = libjpeg-turbo
 	makedepends = xorg-server-xvfb
+	makedepends = webkit2gtk
 	makedepends = webkit2gtk-4.1
 	depends = gcc-libs
 	depends = glibc

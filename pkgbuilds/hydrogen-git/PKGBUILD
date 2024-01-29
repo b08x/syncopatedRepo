@@ -76,7 +76,7 @@ package() {
   make DESTDIR="$pkgdir" -C build install
 
   # install docs
-  install -vDm644 ChangeLog DEVELOPERS INSTALL.md README.txt \
+  install -vDm644 ChangeLog DEVELOPERS INSTALL.md \
       -t "$pkgdir"/usr/share/doc/$pkgname
   # install html manual & tutorial
   cd data/doc

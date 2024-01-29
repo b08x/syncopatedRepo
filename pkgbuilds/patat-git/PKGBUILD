@@ -9,7 +9,7 @@ license=('GPL2')
 depends=('gmp' 'glibc')
 makedepends=()
 source=("https://github.com/jaspervdj/patat/releases/download/v$pkgver/patat-v$pkgver-linux-x86_64.tar.gz")
-md5sums=('256915425c73d50d5513d341218871dd')
+md5sums=('e27f59f2ca499570efc0a7c2292c9dae')
 options=('!strip')
 
 package() {

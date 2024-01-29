@@ -44,7 +44,7 @@ mount_chroot() {
 }
 
 set_configs () {
-  sudo chown -R b08x:b08x /usr/share/devtools
+  sudo chown -R $USER:$USER /usr/share/devtools
   rsync -avP --delete $WORKSPACE/makepkg.conf.d/ /usr/share/devtools/makepkg.conf.d/
   rsync -avP $WORKSPACE/pacman.conf.d/ /usr/share/devtools/pacman.conf.d/
 }
@@ -132,7 +132,9 @@ for arch in ${architectures[@]}; do
 
     cd "${PKGBUILDS}/${pkgname}"
 
-    extra-${arch}-build -c -r $CHROOT -- -c -n -C -u
+    updpkgsums && makepkg --printsrcinfo > .SRCINFO
+
+    extra-${arch}-build -c -r $CHROOT -- -c -n -u
 
     cd $WORKSPACE/builds/packages/$arch
 
