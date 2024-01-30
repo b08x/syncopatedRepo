@@ -5,6 +5,7 @@ pkgbase = sendmidi
 	url = https://github.com/gbevin/SendMIDI
 	arch = i686
 	arch = x86_64
+	arch = x86_64_v3
 	license = GPL3
 	depends = alsa-lib
 	depends = curl

@@ -1,0 +1,48 @@
+pkgname=custom-theme-package
+pkgver=1.0.0
+pkgrel=1
+epoch=
+pkgdesc="Custom theme package"
+arch=('any')
+url="http://example.com"
+license=('GPL')
+groups=()
+depends=()  
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("files/usr/local/share/pixmaps/"
+        "files/usr/local/share/icons/oomox-soundbot_icons.tar.xz"
+        "files/usr/local/share/fonts.tar.xz"
+        "home/.config/fontconfig/fonts.conf"
+        "files/usr/share/backgrounds/syncopated/"
+        "files/usr/local/share/themes/oomox-soundbot.tar.xz")
+noextract=()
+md5sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP') # replace with actual md5sums
+
+package() {
+    # Install icons
+    install -dm644 "${srcdir}/usr/local/share/pixmaps/" "${pkgdir}/usr/local/share/pixmaps/"
+
+    # Extract soundbot theme icons into /usr/local/share/icons
+    bsdtar -xf "${srcdir}/usr/local/share/icons/oomox-soundbot_icons.tar.xz" -C "${pkgdir}/usr/share/icons"
+
+    # Extract fonts to /usr/local/share/fonts
+    bsdtar -xf "${srcdir}/usr/local/share/fonts.tar.xz" -C "${pkgdir}/usr/local/share/"
+
+    # Install fonts.conf
+    install -Dm644 "${srcdir}/home/.config/fontconfig/fonts.conf" "${pkgdir}/home/.config/fontconfig/fonts.conf"
+
+    # Install backgrounds
+    cp -r "${srcdir}/usr/share/backgrounds/syncopated/" "${pkgdir}/usr/share/backgrounds/syncopated/"
+
+    # Extract soundbot theme into /usr/local/share/themes
+    bsdtar -xf "${srcdir}/usr/local/share/themes/oomox-soundbot.tar.xz" -C "${pkgdir}/usr/share/themes"
+}
