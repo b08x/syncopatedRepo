@@ -1,0 +1,17 @@
+pkgbase = libxtract-git
+	pkgdesc = simple, portable, lightweight library of audio feature extraction functions
+	pkgver = 0.320.41273dd
+	pkgrel = 1
+	url = https://github.com/jamiebullock/LibXtract
+	arch = i686
+	arch = x86_64
+	arch = x86_64_v3
+	license = custom
+	makedepends = git
+	depends = glibc
+	provides = libxtract
+	conflicts = libxtract
+	source = git+https://github.com/jamiebullock/LibXtract
+	md5sums = SKIP
+
+pkgname = libxtract-git
