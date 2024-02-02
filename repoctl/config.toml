@@ -9,7 +9,7 @@ color = "auto"
 
 # quiet specifies whether repoctl should print more information or less.
 # I prefer to know what happens, but if you don't like it, you can change it.
-quiet = false
+quiet = true
 
 # default_profile specifies which profile should be used when none is
 # specified on the command line.
@@ -19,7 +19,7 @@ default_profile = "x86_64"
   # repo is the full path to the repository that will be managed by repoctl.
   # The packages that belong to the repository are assumed to lie in the
   # same folder.
-  repo = "/home/b08x/Workspace/syncopatedRepo/builds/repository/x86_64/syncopated.db.tar.zst"
+  repo = "/srv/builds/repository/x86_64/syncopated.db.tar.zst"
 
   # add_params is the set of parameters that will be passed to repo-add
   # when it is called. Specify one time for each parameter.
@@ -64,7 +64,7 @@ default_profile = "x86_64"
   # repo is the full path to the repository that will be managed by repoctl.
   # The packages that belong to the repository are assumed to lie in the
   # same folder.
-  repo = "/home/b08x/Workspace/syncopatedRepo/builds/repository/x86_64_v3/syncopated-v3.db.tar.zst"
+  repo = "/srv/builds/repository/x86_64_v3/syncopated-v3.db.tar.zst"
 
   # add_params is the set of parameters that will be passed to repo-add
   # when it is called. Specify one time for each parameter.
