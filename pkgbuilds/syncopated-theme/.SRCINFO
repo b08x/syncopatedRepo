@@ -1,0 +1,25 @@
+pkgbase = syncopated-theme
+	pkgdesc = Syncopated Theme
+	pkgver = 1.0
+	pkgrel = 5
+	url = https://b08x.github.io/syncopated
+	install = syncopated-theme.install
+	arch = x86_64
+	groups = syncopated
+	license = GPL
+	options = !strip
+	options = !emptydirs
+	source = themes.tar.xz
+	source = icons.tar.xz
+	source = fonts.tar.xz
+	source = pixmaps.tar.xz
+	source = backgrounds.tar.xz
+	source = rofi.tar.xz
+	sha256sums = 56ed88a1479aff171e63bb45e85491736745c5c5e5b0f599161a70ca2a0e8db2
+	sha256sums = f7c7c7506c7f81644bf26378020a54246f5a72a1c27912ffc8f72235c5c1c78c
+	sha256sums = 2e00337844462c61d36e57fffbd881138e42110cd5f7d3f7589b215f41595f0d
+	sha256sums = 493bbfea80fa94adf84612987c95e03893269e21d4133b9b15fe785e68269a6b
+	sha256sums = f4ae55671dcfe76ea8093afb10a90efadf64a32fb717e0a58d3984bd4cd7b903
+	sha256sums = 8611f6ae4bc564000ca09b6d0854b3063476506845cf6c2cdf826d6327d577f5
+
+pkgname = syncopated-theme

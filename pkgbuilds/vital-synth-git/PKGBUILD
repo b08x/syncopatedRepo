@@ -9,9 +9,10 @@ arch=('x86_64' 'x86_64_v3')
 url="https://vital.audio"
 license=('custom')
 provides=('vital')
-conflicts('vital' 'vital-git')
+conflicts=('vital' 'vital-git')
 # groups=('pro-audio' 'lv2-plugins' 'vst-plugins' 'vst3-plugins')
 depends=('alsa-lib>=1.0.16' 'freetype2>=2.2.1' 'gcc-libs' 'gcc>=3.3.1' 'glib2>=2.12.0' 'glibc>=2.17' 'libcurl-gnutls>=7.16.2' 'libgl' 'libglvnd' 'libsecret>=0.7' 'vst2sdk')
+makedepends=('git' 'vst2sdk' 'gendesk')
 # optdepends=('aarch64-linux-gnu-gcc>=5: support for aarch64')
 # options=('!strip' '!emptydirs')
 install=${pkgname}.install
@@ -38,3 +39,4 @@ package() {
 	install -vDm 644 README.md -t "${pkgdir}/usr/share/doc/${_name}"
 	install -vDm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${_name}"
 }
+sha256sums=('SKIP')

@@ -1,8 +1,8 @@
 # Maintainer: sekret, mail=$(echo c2VrcmV0QHBvc3Rlby5zZQo= | base64 -d)
 pkgname=sendmidi
 _pkgname=SendMIDI
-pkgver=1.2.0
-pkgrel=1
+pkgver=1.2.1
+pkgrel=2
 pkgdesc="Multi-platform command-line tool to send out MIDI messages"
 arch=('i686' 'x86_64' 'x86_64_v3')
 url="https://github.com/gbevin/SendMIDI"

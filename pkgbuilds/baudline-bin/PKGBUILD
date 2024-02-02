@@ -19,7 +19,7 @@ pkgname=baudline-bin
 pkgver=1.08
 pkgrel=4
 pkgdesc="Time-frequency browser designed for scientific visualization of the spectral domain."
-arch=('i686' 'x86_64' 'x86_64_v3')
+arch=('x86_64')
 url="http://www.baudline.com/"
 license=('custom')
 depends=('libxp' 'jack' 'libxmu' 'libxxf86vm' 'xorg-fonts-misc')
@@ -27,7 +27,7 @@ makedepends=('imagemagick')
 optdepends=('gzip' 'bzip2' 'flac' 'sox' 'mpg123' 'vorbis-tools')
 provides=('baudline')
 install=baudline-bin.install
-source=("http://www.baudline.com/${pkgname/-bin/}_${pkgver}_linux_${CARCH}.tar.gz"
+source=("${pkgname/-bin/}_${pkgver}_linux_${CARCH}.tar.gz"
 	"${pkgname/-bin/}.desktop"
 	"${pkgname/-bin/}_jack.desktop")
 

@@ -1,34 +1,49 @@
 # Maintainer: Robert Pannick <rwpannick@gmail.com>
 pkgname=syncopated-theme
-pkgver=v1.0
-pkgrel=1
-pkgdesc="Theme files for syncopated linux"
-arch=(any)
+pkgver=1.0
+pkgrel=5
+pkgdesc="Syncopated Theme"
+arch=('x86_64')
 url="https://b08x.github.io/syncopated"
 license=('GPL')
-
-source=("oomox-soundbot.tar.gz"
-        "oomox-soundbot_icons.tar.gz"
-        "fonts.tar.gz"
-        "code-new-roman.zip")
-
-prepare() {
-	cd "$pkgname-$pkgver"
-	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
-}
-
-build() {
-	cd "$pkgname-$pkgver"
-	./configure --prefix=/usr
-	make
-}
-
-check() {
-	cd "$pkgname-$pkgver"
-	make -k check
-}
+source=("themes.tar.xz"
+	"icons.tar.xz"
+	"fonts.tar.xz"
+	"pixmaps.tar.xz"
+	"backgrounds.tar.xz"
+	"rofi.tar.xz")
+install=syncopated-theme.install
+groups=(syncopated)
+options=(!strip !emptydirs)
 
 package() {
-	cd "$pkgname-$pkgver"
-	make DESTDIR="$pkgdir/" install
+	cd "$srcdir"
+
+	install -dm755 "${pkgdir}/usr/local/share/pixmaps"
+	install -dm755 "${pkgdir}/usr/local/share/themes"
+	install -dm755 "${pkgdir}/usr/local/share/icons"
+	install -dm755 "${pkgdir}/usr/local/share/fonts"
+	install -dm755 "${pkgdir}/usr/share/backgrounds/syncopated"
+	install -dm755 "${pkgdir}/usr/share/rofi/themes "
+
+	cp *.png "${pkgdir}/usr/local/share/pixmaps/"
+	chmod 755 "${pkgdir}/usr/local/share/pixmaps/"
+
+	cp -r themes/ "${pkgdir}/usr/local/share/"
+
+	cp -r icons/ "${pkgdir}/usr/local/share/"
+
+	cp -r fonts/ "${pkgdir}/usr/local/share/"
+
+	cp -r backgrounds/ "${pkgdir}/usr/share/backgrounds/syncopated/"
+	chmod 755 "${pkgdir}/usr/share/backgrounds/syncopated/"
+
+	cp -r rofi/  "${pkgdir}/usr/share/"
+
 }
+sha256sums=('56ed88a1479aff171e63bb45e85491736745c5c5e5b0f599161a70ca2a0e8db2'
+            'f7c7c7506c7f81644bf26378020a54246f5a72a1c27912ffc8f72235c5c1c78c'
+            '2e00337844462c61d36e57fffbd881138e42110cd5f7d3f7589b215f41595f0d'
+            '493bbfea80fa94adf84612987c95e03893269e21d4133b9b15fe785e68269a6b'
+            'f4ae55671dcfe76ea8093afb10a90efadf64a32fb717e0a58d3984bd4cd7b903'
+            '8611f6ae4bc564000ca09b6d0854b3063476506845cf6c2cdf826d6327d577f5')

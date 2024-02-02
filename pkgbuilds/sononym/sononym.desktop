@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Sononym
 Comment=Sound Manager
-Exec=sononym
+Exec=/opt/sononym/sononym
 Terminal=false
 Type=Application
 Icon=sononym

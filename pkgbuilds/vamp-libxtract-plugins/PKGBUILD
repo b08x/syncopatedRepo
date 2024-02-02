@@ -8,7 +8,8 @@ arch=("i686" "x86_64" 'x86_64_v3')
 url="https://code.soundsoftware.ac.uk/projects/vamp-libxtract-plugins"
 license=("GPL2")
 depends=("vamp-plugin-sdk" "libxtract-git")
-source=("${pkgname}"::"http://git.altlinux.org/gears/v/vamp-libxtract-plugins.git")
+makedepends=("git" "fftw")
+source=("git+http://git.altlinux.org/gears/v/vamp-libxtract-plugins.git")
 
 build() {
 	cd "${pkgname}"
@@ -21,4 +22,4 @@ package() {
 }
 
 # vim:set ts=2 sw=2 et:
-md5sums=('930116685de370e68738ec278da50ab5')
+md5sums=('SKIP')

@@ -7,9 +7,11 @@ pkgbase = vamp-libxtract-plugins
 	arch = x86_64
 	arch = x86_64_v3
 	license = GPL2
+	makedepends = git
+	makedepends = fftw
 	depends = vamp-plugin-sdk
 	depends = libxtract-git
-	source = vamp-libxtract-plugins::http://git.altlinux.org/gears/v/vamp-libxtract-plugins.git
-	md5sums = 930116685de370e68738ec278da50ab5
+	source = git+http://git.altlinux.org/gears/v/vamp-libxtract-plugins.git
+	md5sums = SKIP
 
 pkgname = vamp-libxtract-plugins
