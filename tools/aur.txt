@@ -1,4 +1,1 @@
-bipscript
-bipscript-ide
-sonic-pi-git
-sparta-plugins
+ingen-git

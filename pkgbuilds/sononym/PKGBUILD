@@ -1,7 +1,7 @@
 # Maintainer: Robert Pannick <rwpannick@gmail.com>
 pkgname=sononym
 pkgver=1.5.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Searchable Sound"
 arch=('x86_64' 'x86_64_v3')
 url="https://www.sononym.net/"

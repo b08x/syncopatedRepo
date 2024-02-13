@@ -6,7 +6,7 @@
 _name=qmidiarp
 pkgname=qmidiarp-git
 pkgver=0.7.0.r6.g110ad9d
-pkgrel=2
+pkgrel=6
 pkgdesc="A MIDI arpeggiator, phrase generator and controller LFO for the ALSA sequencer."
 arch=('x86_64' 'x86_64_v3')
 url="https://sourceforge.net/projects/qmidiarp/"
@@ -15,7 +15,7 @@ groups=('lv2-plugins' 'pro-audio')
 conflicts=('qmidiarp')
 provides=('qmidiarp')
 depends=('jack2' 'hicolor-icon-theme' 'liblo' 'qt5-base')
-makedepends=('git' 'lv2' 'qt5-tools')
+makedepends=('git' 'lv2' 'qt5-tools' 'gcc11' 'pango' 'cairo' 'glu')
 source=("${_name}::git://git.code.sf.net/p/qmidiarp/code")
 sha512sums=('SKIP')
 
@@ -31,6 +31,8 @@ pkgver() {
 # error: '/usr/share/aclocal/lt~obsolete.m4' does not exist.
 build() {
   cd "${_name}"
+  git submodule update --init
+  export CC=gcc-11 CXX=g++-11
   libtoolize -Wnone --quiet 2> /dev/null
   aclocal
   autoheader

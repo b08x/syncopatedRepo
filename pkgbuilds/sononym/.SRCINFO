@@ -1,7 +1,7 @@
 pkgbase = sononym
 	pkgdesc = Searchable Sound
 	pkgver = 1.5.3
-	pkgrel = 1
+	pkgrel = 2
 	url = https://www.sononym.net/
 	arch = x86_64
 	arch = x86_64_v3

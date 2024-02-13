@@ -1,2 +1,5 @@
 builds/
 *.log
+gcc11/
+git/
+pkgbuilds/**/*gitignore
