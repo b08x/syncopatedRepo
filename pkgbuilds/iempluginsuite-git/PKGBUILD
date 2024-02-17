@@ -14,7 +14,7 @@ groups=(pro-audio vst3-plugins)
 depends=('gcc-libs' 'glibc' 'libglvnd' 'libpng' 'libx11' 'libxcursor' 'libxext' 'libxinerama'
 'libxrandr' 'zlib')
 makedepends=('git' 'alsa-lib' 'cmake' 'curl' 'fftw' 'freetype2' 'gendesk' 'jack2' 'juce' 'libjpeg-turbo'
-'xorg-server-xvfb' 'webkit2gtk' 'webkit2gtk-4.1')
+'xorg-server-xvfb' 'webkit2gtk' 'webkit2gtk-4.1' 'vst2sdk')
 provides=('iempluginsuite-git')
 conflicts=('iempluginsuite')
 source=(
@@ -131,8 +131,9 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DIEM_BUILD_STANDALONE=ON \
     -DIEM_USE_SYSTEM_JUCE=OFF \
-    -DIEM_BUILD_VST2=OFF \
+    -DIEM_BUILD_VST2=ON \
     -DIEM_BUILD_VST3=ON \
+    -D VST2SDKPATH=/usr/include/vst36 \
     -Wno-dev
 
   cmake --build build --config Release

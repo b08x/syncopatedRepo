@@ -16,8 +16,8 @@ license=('MIT')
 groups=('pro-audio')
 conflicts=('sonic-pi')
 provides=('sonic-pi')
-depends=('aubio' 'boost' 'cmake' 'elixir' 'erlang-nox' 'gcc-libs' 'gendesk'
-'glfw-x11' 'glibc' 'lua' 'osmid' 'qscintilla-qt6' 'qt6-base' 'qt6-svg' 'qt6-tools'
+depends=('aubio' 'elixir' 'erlang-nox' 'gcc-libs'
+'glfw-x11' 'glibc' 'lua' 'osmid' 'qt6-base' 'qt6-svg' 'qt6-tools'
 'qt6-webengine' 'rtaudio' 'rtmidi' 'ruby' 'ruby-activesupport' 'ruby-bundler'
 'ruby-ffi' 'ruby-i18n' 'ruby-kramdown' 'ruby-minitest' 'ruby-mocha' 'ruby-multi_json'
 'ruby-rake' 'ruby-rouge' 'ruby-rugged' 'ruby-sys-proctable' 'ruby-rexml' 'stk' 'libxext' 'libxft' 'libx11' 'opus-tools' 'opus' 'sc3-plugins' 'sox' 'supercollider')

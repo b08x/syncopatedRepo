@@ -21,6 +21,7 @@ pkgbase = iempluginsuite-git
 	makedepends = xorg-server-xvfb
 	makedepends = webkit2gtk
 	makedepends = webkit2gtk-4.1
+	makedepends = vst2sdk
 	depends = gcc-libs
 	depends = glibc
 	depends = libglvnd

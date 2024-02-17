@@ -3,3 +3,4 @@ builds/
 gcc11/
 git/
 pkgbuilds/**/*gitignore
+.env

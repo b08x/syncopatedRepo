@@ -1,6 +1,7 @@
 # Maintainer: Robert Pannick <rwpannick@gmail.com>
 # Contributor: Mads Kjeldgaard <mail@madskjeldgaard.dk>
 pkgname=sparta-plugins
+pkgname=(sparta-plugins-{lv2,standalone,vst})
 pkgver=2022_06_20_v1.6.2
 pkgrel=1
 pkgdesc='AALTO vst plugins for Spatial Audio Real-time Applications'
