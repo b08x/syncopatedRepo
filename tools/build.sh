@@ -105,9 +105,9 @@ set_configs() {
 
 cleanup() {
 	if [[ ! $DEBUG ]]; then
-	  unmount_chroot && echo "chroot umounted"
+		unmount_chroot && echo "chroot umounted"
 	fi
-echo "All set!"
+	echo "All set!"
 }
 
 # Trap signals for cleanup
@@ -195,16 +195,19 @@ for pkgname in ${package_selection[@]}; do
 		# Build the package
 		extra-${arch}-build -c -r $CHROOT -- -c -n -u || break
 
-		# Sign the package
+		# Change into the package destination folder
+		cd $PKGDEST
+
+		# Sign the package(s)
 		for pkg in *.zst; do
-			echo $(skate get advice) | gpg2 -v --batch \
-			--yes --detach-sign --pinentry-mode loopback \
-			--passphrase --passphrase-fd 0 \
-			--out $pkg.sig --sign $pkg && \
-			repoctl add -P $arch -m -r ./$pkg
+			echo $(cat /tmp/phrase) | gpg2 -v --batch \
+				--yes --detach-sign --pinentry-mode loopback \
+				--passphrase --passphrase-fd 0 \
+				--out $pkg.sig --sign $pkg &&
+				repoctl add -P $arch -m -r ./$pkg
 		done
 
-		# Add package to repository
+		# Add package(s) to repository
 		cd $BUILDS/repository/$arch
 
 		if [[ $arch == 'x86_64' ]]; then
@@ -217,7 +220,7 @@ for pkgname in ${package_selection[@]}; do
 
 		cd "${PKGBUILDS}/${pkgname}"
 	done # end loop
-done # end loop
+done  # end loop
 
 ##########################################################################
 #                                                                        #

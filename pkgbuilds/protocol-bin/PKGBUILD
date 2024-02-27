@@ -1,0 +1,41 @@
+# Maintainer: Mathias Buhr <napcode@aparatus.de>
+# Contributor: Kenneth Flak <kennethflak@protonmail.com>
+
+pkgname=protokol-bin
+pkgver=0.5.4.105
+pkgrel=1
+pkgdesc='MIDI logging and OSC monitoring'
+arch=('x86_64' 'armv7l' 'aarch64')
+url=http://hexler.net
+license=(custom:Protokol)
+source_x86_64=("https://hexler.net/pub/protokol/protokol-$pkgver-linux-x64.deb")
+source_armv7l=("https://hexler.net/pub/protokol/protokol-$pkgver-linux-armhf.deb")
+source_aarch64=("https://hexler.net/pub/protokol/protokol-$pkgver-linux-arm64.deb")
+sha256sums_x86_64=('ffadae98b395632b7bc39ca5b325d890aae244930a5e27d9a7c8cda101702d05')
+sha256sums_armv7l=('4509c8a9400e737bce3ba0f598f3709744630a2c2b7e80c12dd4ccd2980a53c8')
+sha256sums_aarch64=('9ea20a3e5f384c281bbbd3a4597634ba5db3285c7322ba81331eaac316d48b65')
+
+package() {
+
+	cd "$srcdir"
+
+	tar xzf data.tar.gz
+
+	sed -i 's:opt/protokol:usr/bin:g' usr/share/applications/protokol.desktop
+
+	install -Dm755 $srcdir/opt/protokol/Protokol $pkgdir/usr/bin/Protokol
+	install -Dm644 $srcdir/usr/share/applications/protokol.desktop -t $pkgdir/usr/share/applications
+
+	install -Dm644 $srcdir/usr/share/icons/hicolor/16x16/apps/protokol.png -t $pkgdir/usr/share/icons/hicolor/16x16/apps
+
+	install -Dm644 $srcdir/usr/share/icons/hicolor/32x32/apps/protokol.png -t $pkgdir/usr/share/icons/hicolor/32x32/apps
+
+	install -Dm644 $srcdir/usr/share/icons/hicolor/48x48/apps/protokol.png -t $pkgdir/usr/share/icons/hicolor/48x48/apps
+
+	install -Dm644 $srcdir/usr/share/icons/hicolor/128x128/apps/protokol.png -t $pkgdir/usr/share/icons/hicolor/128x128/apps
+
+	install -Dm644 $srcdir/usr/share/icons/hicolor/256x256/apps/protokol.png -t $pkgdir/usr/share/icons/hicolor/256x256/apps
+
+  install -Dm644 $srcdir/usr/share/doc/protokol/changelog.gz -t $pkgdir/usr/share/doc/protokol
+
+}

@@ -1,0 +1,17 @@
+pkgbase = protokol-bin
+	pkgdesc = MIDI logging and OSC monitoring
+	pkgver = 0.5.4.105
+	pkgrel = 1
+	url = http://hexler.net
+	arch = x86_64
+	arch = armv7l
+	arch = aarch64
+	license = custom:Protokol
+	source_x86_64 = https://hexler.net/pub/protokol/protokol-0.5.4.105-linux-x64.deb
+	sha256sums_x86_64 = ffadae98b395632b7bc39ca5b325d890aae244930a5e27d9a7c8cda101702d05
+	source_armv7l = https://hexler.net/pub/protokol/protokol-0.5.4.105-linux-armhf.deb
+	sha256sums_armv7l = 4509c8a9400e737bce3ba0f598f3709744630a2c2b7e80c12dd4ccd2980a53c8
+	source_aarch64 = https://hexler.net/pub/protokol/protokol-0.5.4.105-linux-arm64.deb
+	sha256sums_aarch64 = 9ea20a3e5f384c281bbbd3a4597634ba5db3285c7322ba81331eaac316d48b65
+
+pkgname = protokol-bin
